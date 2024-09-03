@@ -1,0 +1,203 @@
+{% load static %}
+{% include "header.html" %}
+
+<style>
+
+    .container {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 30px 10px;
+    }
+
+    .section-title {
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #000000;
+    }
+
+    .quick-shortcuts {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .quick-shortcut {
+        padding: 20px;
+        background-color: #f3f1f1;
+        color: black;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 800;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, background-color 0.3s, color 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 20px;
+        cursor: pointer;
+    }
+
+    .quick-shortcut:hover {
+        transform: translateY(-3px);
+        background-color: #009ab9;
+        color: white;
+    }
+
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .quick-link {
+        background-color: #f3f1f1;
+        color: black;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    .quick-link:hover {
+        transform: translateY(-3px);
+        background-color: #009ab9;
+        color: white;
+    }
+
+    .quick-link-title {
+        margin-bottom: 15px;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: left;
+        color: black;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        transition: color 0.3s;
+    }
+
+    .quick-link ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        color: black;
+        transition: color 0.3s;
+    }
+
+    .quick-link ul li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .quick-link ul li::before {
+        content: '●';
+        color: #f0a500;
+        margin-right: 8px;
+    }
+
+    .quick-link:hover .quick-link-title,
+    .quick-link:hover ul,
+    .quick-link:hover ul li {
+        color: white;
+    }
+
+    .quick-link a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+    }
+
+    .quick-link:hover a {
+        color: white;
+    }
+
+    @media (max-width: 992px) {
+
+        .quick-shortcuts,
+        .quick-links {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+
+        .quick-shortcuts,
+        .quick-links {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<div class="container">
+    <div class="section-title">Quick Shortcuts</div>
+    <div class="quick-shortcuts">
+        <a href="/njqca/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">NJQCA</div>
+        </a>
+        <a href="/qi_list/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">NJ Quality Inspection</div>
+        </a>
+        <a href="/mpc_list/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Machine Part Changes</div>
+        </a>
+        <a href="/kb_dt/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Knowledge Base</div>
+        </a>
+        <a href="/item_part/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Item Part History</div>
+        </a>
+        <a href="/stock_movement/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Stock Movement</div>
+        </a>
+        <a href="/serial_no/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Serial No</div>
+        </a>
+        <a href="/Item/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Item List</div>
+        </a>
+        <a href="/item_history/" style="text-decoration: none; color: inherit;">
+            <div class="quick-shortcut">Item History</div>
+        </a>
+    </div>
+
+    <div class="section-title">Quick Links</div>
+    <div class="quick-links">
+        <div class="quick-link">
+            <div class="quick-link-title">Stock</div>
+            <ul>
+                <li><a href="/stock_movement/" style="text-decoration: none; color: inherit;">Stock Entry List</a></li>
+                <li><a href="/Item/" style="text-decoration: none; color: inherit;">Item List</a></li>
+                <li><a href="/serial_no/" style="text-decoration: none; color: inherit;">Serial No List</a></li>
+                <li><a href="/warehouse_list/">Warehouse List</a></li>
+                <li><a href="/stock_reconciliation/">Stock Reconciliation</a></li>
+            </ul>
+        </div>
+
+        <div class="quick-link">
+            <div class="quick-link-title">Human Resources</div>
+            <ul>
+                <li><a href="/employee/">Employee</a></li>
+                <li><a href="/employee_attendance_tool/">Employee Attendance Tool</a></li>
+                <li><a href="/salary_structure/">Salary Structure</a></li>
+            </ul>
+        </div>
+
+        <div class="quick-link">
+            <div class="quick-link-title">Quality Management</div>
+            <ul>
+                <li><a href="/qi_list/" style="text-decoration: none; color: inherit;">NJ Quality Inspection List</a></li>
+                <li><a href="/iqc_inspection_list/">IQC Inspection List</a></li>
+            </ul>
+        </div>
+
+        <div class="quick-link">
+            <div class="quick-link-title">Non Compliance</div>
+            <ul>
+                <li><a href="/non_compliance_list/">Non Compliance List</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Celebration Login</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'img/bdaybackground.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* This will fix the background image */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+
+        /* Scrolling text styles */
+        .scrolling-text {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+            color: #ff6b6b;
+            font-size: 24px;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        .scrolling-text div {
+            display: inline-block;
+            padding-left: 100%; /* This pushes the text to the right initially */
+            animation: scroll 10s linear infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        /* Login container styles */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .login-container h2 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .login-button:hover {
+            background-color: #ff4b4b;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scrolling birthday message -->
+    <div class="scrolling-text">
+        <div>Sorry Dear! Your birthday is on 9th October. A surprise awaits you!</div>
+    </div>
+     <!-- <img src="{% static 'img/bdaybackground.jpg' %}" alt="no image"> -->
+    <!-- Login form -->
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="/mainpage/" method="post">
+            {% csrf_token %}
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        
+        <div class="footer">
+            <p>Birthday Celebration Login</p>
+        </div>
+    </div>
+
+</body>
+</html>
