@@ -32,7 +32,7 @@ TEMPLATES_DIRS=os.path.join(BASE_DIR,'arpiproj/templates')
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoice.runserver_nonstatic'
+    # 'whitenoise'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoice.middleware.WhiteNoiceMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,3 +131,4 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
