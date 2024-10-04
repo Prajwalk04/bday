@@ -14,26 +14,45 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <!-- Optional: Custom Styles -->
     <style>
-        body {
-            background-color: black;
-            margin: 0;
-        }
-        nav {
-            height: 60px;
-            width: 100%;
-            background-color: black;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            z-index: 100;
-            overflow: hidden; /* Ensure bulbs stay within nav */
-            padding: 0 20px; /* Space for nav items and bulbs */
-        }
+     body {
+        background-color: black;
+        margin: 0;
+    }
+
+    nav {
+        height: 60px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        padding: 0 20px; /* Space for nav items */
+        overflow: hidden;
+    }
+
+    /* Add a pseudo-element to blur the background image without blurring content */
+    nav::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-image:url("{% static 'img/background.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; 
+        filter: blur(5px); /* Blurs only the background image */
+        opacity: 0.6; /* Fades the image */
+    }
         
         /* Bulbs Container */
         .bulbs-container {
@@ -313,63 +332,29 @@
             font-size: 1rem;
             color: #666;
         }
-        .balloons {
-            position: fixed; /* Ensure balloons are fixed to the viewport */
-            bottom: 0; /* Start at the bottom of the viewport */
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Full viewport height */
-            pointer-events: none; /* Make sure balloons don't interfere with user interaction */
-            z-index: 10; /* Ensure balloons fly over content but under any overlay elements */
-          }
-          
-          .balloons img {
-            position: absolute;
-            bottom: -100px; /* Start below the viewport */
-            animation: fly 5s ease-in forwards;
-            opacity: 0;
-          }
-          
-          /* Spread balloons more evenly across the viewport */
-          .balloons img:nth-child(1) {
-            left: 10%; /* Balloon 1 at 10% from the left */
-            animation-delay: 0.2s;
-          }
-          
-          .balloons img:nth-child(2) {
-            left: 30%; /* Balloon 2 at 30% from the left */
-            animation-delay: 0.4s;
-          }
-          
-          .balloons img:nth-child(3) {
-            left: 50%; /* Balloon 3 at the center */
-            animation-delay: 0.6s;
-          }
-          
-          .balloons img:nth-child(4) {
-            left: 70%; /* Balloon 4 at 70% from the left */
-            animation-delay: 0.8s;
-          }
-          
-          .balloons img:nth-child(5) {
-            left: 90%; /* Balloon 5 at 90% from the left */
-            animation-delay: 1s;
-          }
-          
-          @keyframes fly {
-            0% {
-              transform: translateY(100vh); /* Start from below the viewport */
-              opacity: 0; /* Initially transparent */
-            }
-            50% {
-              opacity: 1; /* Fade in during the flight */
-            }
-            100% {
-              transform: translateY(-100vh); /* Move above the viewport */
-              opacity: 0; /* Fade out at the top */
-            }
-          }
-          
+        .balloon {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    background-color: #FF69B4;
+    border-radius: 50%;
+    animation: float 30s ease-in-out infinite;
+}
+
+.balloon:nth-child(odd) {
+    background-color: #FFD700; /* Gold color for odd balloons */
+}
+
+.balloon:nth-child(even) {
+    background-color: #87CEEB; /* Sky blue for even balloons */
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); }
+    50% { transform: translateY(50vh); }
+    100% { transform: translateY(-100vh); }
+}
+
           
     </style>
 </head>
@@ -406,6 +391,8 @@
             <div class="carousel-item">
                 <img src="{% static 'img/img5.jpeg' %}" class="d-block w-100" alt="Image 5">
             </div>
+           
+
         </div>
         <!-- Controls -->
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -633,7 +620,7 @@
                                     <div class="card">
                                         <img src="{% static 'img/img25.jpeg' %}" alt="Card Image 3">
                                         <div class="card-body">
-                                            <p class="card-text"  style="font-family:Georgia, serif;">Every day with you feels like an adventure. Happy birthday!!.</p>
+                                            <p class="card-text" >Every day with you feels like an adventure. Happy birthday!!.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -645,7 +632,7 @@
                                         <div class="card">
                                             <img src="{% static 'img/img26.jpeg' %}" alt="Card Image 1">
                                             <div class="card-body">
-                                                <p class="card-text" style="font-family:cursive;">Every day, I ask myself how I got lucky enough to have you in my life. Happy birthday, my love!.</p>
+                                                <p class="card-text">Every day, I ask myself how I got lucky enough to have you in my life. Happy birthday, my love!.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -654,7 +641,7 @@
                                         <div class="card">
                                             <img src="{% static 'img/img27.jpeg' %}" alt="Card Image 2">
                                             <div class="card-body">
-                                                <p class="card-text" style="font-family:cursive;">Happy birthday to a girl who’s not getting older, just more experienced at being amazing!.</p>
+                                                <p class="card-text">Happy birthday to a girl who’s not getting older, just more experienced at being amazing!.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -663,7 +650,7 @@
                                         <div class="card">
                                             <img src="{% static 'img/img31.jpeg' %}" alt="Card Image 3">
                                             <div class="card-body">
-                                                <p class="card-text" style="font-family:cursive;">Happy birthday! Your beauty intensifies each year—just like your taste in partners!.</p>
+                                                <p class="card-text">Happy birthday! Your beauty intensifies each year—just like your taste in partners!.</p>
                                             </div>
                                         </div>
                                     </div> 
@@ -675,7 +662,7 @@
                                             <div class="card">
                                                 <img src="{% static 'img/img18.jpeg' %}" alt="Card Image 1">
                                                 <div class="card-body">
-                                                    <p class="card-text" style="font-family: 'Brush Script MT', cursive;">Happy Birthday to my heartbeat! You bring so much happiness and love into my life. I hope your birthday is as special and amazing as you are to me.</p>
+                                                    <p class="card-text">Happy Birthday to my heartbeat! You bring so much happiness and love into my life. I hope your birthday is as special and amazing as you are to me.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -684,7 +671,7 @@
                                             <div class="card">
                                                 <img src="{% static 'img/img28.jpeg' %}" alt="Card Image 2">
                                                 <div class="card-body">
-                                                    <p class="card-text" style="font-family: 'Brush Script MT', cursive;">Happy Birthday to the girl who makes my heart skip a beat! You are the reason for my happiness, and I feel so lucky to have you in my life.</p>
+                                                    <p class="card-text" >Happy Birthday to the girl who makes my heart skip a beat! You are the reason for my happiness, and I feel so lucky to have you in my life.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -693,37 +680,15 @@
                                             <div class="card">
                                                 <img src="{% static 'img/img30.jpeg' %}" alt="Card Image 3">
                                                 <div class="card-body">
-                                                    <p class="card-text" style="font-family: 'Brush Script MT', cursive;">Happy Birthday, beautiful! You are my sunshine on cloudy days and my guiding star in the night sky. I'm so lucky to have you in my life.!!</p>
+                                                    <p class="card-text" >Happy Birthday, beautiful! You are my sunshine on cloudy days and my guiding star in the night sky.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="balloons"></div>
 
             
-                    <div class="balloons">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon1.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon2.svg' %}" alt="Balloon">
-                        <img src="{% static 'img/ballon3.svg' %}" alt="Balloon">
-                      </div>
-                      
+                                
     </section>
     <script>
     window.onload = function() {
@@ -731,6 +696,54 @@
           balloon.style.animationPlayState = 'running'; 
         });
       };
+
+      function launchConfetti() {
+            const duration = 5 * 1000; // Confetti duration in milliseconds (5 seconds)
+            const end = Date.now() + duration;
+
+            // Confetti settings
+            const colors = ['#bb0000', '#ffffff', '#ffeb3b', '#2196f3', '#4caf50'];
+
+            (function frame() {
+                // Randomly fire confetti in different directions
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                // Repeat until the duration ends
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // Automatically launch confetti when the page loads
+        window.onload = function() {
+            launchConfetti();
+        };
+        const balloonContainer = document.querySelector('.balloons');
+
+for (let i = 0; i < 30; i++) { // Create 30 balloons
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    
+    // Set random positions for each balloon
+    balloon.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+    balloon.style.animationDelay = Math.random() * 30 + 's'; // Randomize animation start time
+    
+    balloonContainer.appendChild(balloon);
+}
     </script>
 </body>
 </html>

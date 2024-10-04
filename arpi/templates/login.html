@@ -12,7 +12,7 @@
             background-image: url("{% static 'img/bdaybackground.jpg' %}");
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* This will fix the background image */
+            background-attachment: fixed;
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -21,7 +21,6 @@
             align-items: center;
             position: relative;
         }
-        
 
         /* Scrolling text styles */
         .scrolling-text {
@@ -34,25 +33,26 @@
             padding: 10px 0;
             text-align: center;
         }
-        
+
         .scrolling-text div {
             display: inline-block;
-            padding-left: 100%; /* This pushes the text to the right initially */
+            padding-left: 100%;
             animation: scroll 10s linear infinite;
             white-space: nowrap;
         }
-        
+
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
-        
+
         /* Login container styles */
         .login-container {
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             padding: 20px;
-            width: 300px;
+            width: 100%;
+            max-width: 350px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -93,6 +93,76 @@
             font-size: 14px;
             color: #777;
         }
+
+        /* Countdown Timer */
+        #countdown {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-top: 20px;
+        }
+
+        /* Fireworks styles */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            background: radial-gradient(circle, white, transparent);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(100);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+                background-position: top;
+                background-size: cover;
+            }
+
+            .scrolling-text {
+                font-size: 18px;
+            }
+
+            .login-container {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scrolling-text {
+                font-size: 16px;
+            }
+
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-button {
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +171,7 @@
     <div class="scrolling-text">
         <div>Sorry Dear! Your birthday is on 9th October. A surprise awaits you!</div>
     </div>
-     <!-- <img src="{% static 'img/bdaybackground.jpg' %}" alt="no image"> -->
+
     <!-- Login form -->
     <div class="login-container">
         <h2>Login</h2>
@@ -115,10 +185,61 @@
             <button type="submit" class="login-button">Login</button>
         </form>
         
+        <!-- Countdown Timer -->
+        <div id="countdown"></div>
+
         <div class="footer">
             <p>Birthday Celebration Login</p>
         </div>
     </div>
 
+    <!-- Fireworks container -->
+    <div class="fireworks" id="fireworks"></div>
+
+    <script>
+        // Countdown timer logic
+        const countdown = document.getElementById('countdown');
+        const birthday = new Date('October 9, ' + new Date().getFullYear() + ' 00:00:00').getTime();
+
+        const updateCountdown = setInterval(function() {
+            const now = new Date().getTime();
+            const timeLeft = birthday - now;
+
+            if (timeLeft < 0) {
+                clearInterval(updateCountdown);
+                countdown.innerHTML = "Happy Birthday!";
+                launchFireworks();
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                countdown.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
+        }, 1000);
+
+        // Fireworks logic
+        function launchFireworks() {
+            const fireworksContainer = document.getElementById('fireworks');
+            fireworksContainer.style.display = 'block';
+
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.left = Math.random() * 100 + 'vw';
+                firework.style.top = Math.random() * 100 + 'vh';
+                fireworksContainer.appendChild(firework);
+                
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+
+            setTimeout(() => {
+                fireworksContainer.style.display = 'none';
+            }, 5000); // Fireworks will be displayed for 5 seconds
+        }
+    </script>
 </body>
 </html>
